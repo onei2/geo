@@ -34,4 +34,31 @@ SET d = 6378137 * ACOS(SIN(lat1rad) * SIN(lat2rad) + COS(lat1rad) * COS(lat2rad)
 RETURN ROUND(d);
 END $$
 
+CREATE FUNCTION Haversine (lat1 DOUBLE, lng1 DOUBLE, lat2 DOUBLE, lng2 DOUBLE) RETURNS DOUBLE
+BEGIN
+DECLARE x DOUBLE;
+DECLARE y DOUBLE;
+DECLARE a DOUBLE;
+DECLARE c DOUBLE;
+DECLARE d DOUBLE;
+DECLARE lat1rad DOUBLE;
+DECLARE lng1rad DOUBLE;
+DECLARE lat2rad DOUBLE;
+DECLARE lng2rad DOUBLE;
+DECLARE deltaLatRad DOUBLE;
+DECLARE deltaLngRad DOUBLE;
+SET lat1rad = RADIANS(lat1);
+SET lng1rad = RADIANS(lng1);
+SET lat2rad = RADIANS(lat2);
+SET lng2rad = RADIANS(lng2);
+SET deltaLatRad = lat2rad - lat1rad;
+SET deltaLngRad = lng2rad - lng1rad;
+SET x = SIN(deltaLatRad / 2);
+SET y = SIN(deltaLngRad / 2);
+SET a = x * x + COS(lat1rad) * COS(lat2rad) * y * y;
+SET c = 2 * ATAN2(SQRT(a), SQRT(1 - a));
+SET d = 6378137 * c;
+RETURN ROUND(d);
+END $$
+
 DELIMITER ;
