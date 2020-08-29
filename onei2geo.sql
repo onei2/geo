@@ -19,4 +19,19 @@ SET d = 6378137 * SQRT(x * x + y * y);
 RETURN ROUND(d);
 END $$
 
+CREATE FUNCTION SphericalLawOfCosines (lat1 DOUBLE, lng1 DOUBLE, lat2 DOUBLE, lng2 DOUBLE) RETURNS DOUBLE
+BEGIN
+DECLARE d DOUBLE;
+DECLARE lat1rad DOUBLE;
+DECLARE lng1rad DOUBLE;
+DECLARE lat2rad DOUBLE;
+DECLARE lng2rad DOUBLE;
+SET lat1rad = RADIANS(lat1);
+SET lng1rad = RADIANS(lng1);
+SET lat2rad = RADIANS(lat2);
+SET lng2rad = RADIANS(lng2);
+SET d = 6378137 * ACOS(SIN(lat1rad) * SIN(lat2rad) + COS(lat1rad) * COS(lat2rad) * COS(lng2rad - lng1rad));
+RETURN ROUND(d);
+END $$
+
 DELIMITER ;
