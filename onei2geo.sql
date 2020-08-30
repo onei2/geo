@@ -1,3 +1,9 @@
+/*
+*   BSD 3-Clause License
+*   Copyright (c) 2020, Ivan Ivanovic
+*   All rights reserved.
+*/
+
 DELIMITER $$
 
 CREATE FUNCTION EquirectangularApproximation (lat1 DOUBLE, lng1 DOUBLE, lat2 DOUBLE, lng2 DOUBLE) RETURNS DOUBLE
