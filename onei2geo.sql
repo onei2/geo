@@ -2,6 +2,8 @@
 *   BSD 3-Clause License
 *   Copyright (c) 2020, Ivan Ivanovic
 *   All rights reserved.
+*
+*   MySQL stored function implementation.
 */
 
 DELIMITER $$
