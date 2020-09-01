@@ -78,4 +78,15 @@ SET colat2rad = RADIANS(90 - lat2);
 RETURN ROUND(6378137 * SQRT(colat1rad * colat1rad + colat2rad * colat2rad - 2 * colat1rad * colat2rad * COS(RADIANS(lng2 - lng1))));
 END $$
 
+CREATE FUNCTION EllipsoidalEarthProjectedToPlane (lat1 DOUBLE, lng1 DOUBLE, lat2 DOUBLE, lng2 DOUBLE) RETURNS DOUBLE
+BEGIN
+DECLARE latAvgRad DOUBLE;
+DECLARE K1 DOUBLE;
+DECLARE K2 DOUBLE;
+SET latAvgRad = RADIANS((lat1 + lat2) / 2);
+SET K1 = 111.13209 - 0.56605 * COS(2 * latAvgRad) + 0.00120 * COS(4 * latAvgRad);
+SET K2 = 111.41513 * COS(latAvgRad) - 0.09455 * COS(3 * latAvgRad) + 0.00012 * COS(5 * latAvgRad);
+RETURN SQRT(POW(K1 * (lat2 - lat1), 2) + POW(K2 * (lng2 - lng1), 2));
+END $$
+
 DELIMITER ;
