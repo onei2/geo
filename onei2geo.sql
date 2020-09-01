@@ -69,4 +69,13 @@ SET d = 6378137 * c;
 RETURN ROUND(d);
 END $$
 
+CREATE FUNCTION PolarCoordinateFlatEarthFormula (lat1 DOUBLE, lng1 DOUBLE, lat2 DOUBLE, lng2 DOUBLE) RETURNS DOUBLE
+BEGIN
+DECLARE colat1rad DOUBLE;
+DECLARE colat2rad DOUBLE;
+SET colat1rad = RADIANS(90 - lat1);
+SET colat2rad = RADIANS(90 - lat2);
+RETURN ROUND(6378137 * SQRT(colat1rad * colat1rad + colat2rad * colat2rad - 2 * colat1rad * colat2rad * COS(RADIANS(lng2 - lng1))));
+END $$
+
 DELIMITER ;
