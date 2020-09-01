@@ -86,7 +86,7 @@ DECLARE K2 DOUBLE;
 SET latAvgRad = RADIANS((lat1 + lat2) / 2);
 SET K1 = 111.13209 - 0.56605 * COS(2 * latAvgRad) + 0.00120 * COS(4 * latAvgRad);
 SET K2 = 111.41513 * COS(latAvgRad) - 0.09455 * COS(3 * latAvgRad) + 0.00012 * COS(5 * latAvgRad);
-RETURN SQRT(POW(K1 * (lat2 - lat1), 2) + POW(K2 * (lng2 - lng1), 2));
+RETURN ROUND(SQRT(POW(K1 * (lat2 - lat1), 2) + POW(K2 * (lng2 - lng1), 2)) * 1000);
 END $$
 
 DELIMITER ;
